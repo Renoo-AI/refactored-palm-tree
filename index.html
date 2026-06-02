@@ -1,492 +1,321 @@
 <!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | The $5M Standard</title>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-    body {
-      background-color: #050505;
-      color: #e5e2e1;
-      overflow-x: hidden;
-    }
+    <!-- Fonts: Cinzel Decorative (Display) & Outfit (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Outfit:wght@200;400;600;800&display=swap" rel="stylesheet">
 
-    .glass-card {
-      background: rgba(10, 10, 10, 0.4);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      border: 0.5px solid rgba(255, 255, 255, 0.08);
-      box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
-    }
-
-    .metallic-gold-bg {
-      background: linear-gradient(135deg, #f2ca50 0%, #d4af37 30%, #9c7c13 70%, #f2ca50 100%);
-      background-size: 200% 200%;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 10px rgba(242, 202, 80, 0.2);
-      animation: goldFlow 12s ease infinite;
-    }
-
-    @keyframes goldFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .brushed-titanium-border {
-      position: relative;
-      border: 0.5px solid rgba(181, 181, 179, 0.3);
-      overflow: hidden;
-    }
-
-    .brushed-titanium-border::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.03) 3px, transparent 4px);
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    .liquid-mercury-effect {
-      background: linear-gradient(145deg, #2a2a2a, #0a0a0a);
-      position: relative;
-    }
-
-    .liquid-mercury-effect::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.15) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .aura-glow {
-      position: absolute;
-      width: 1200px;
-      height: 1200px;
-      background: radial-gradient(circle, rgba(242, 202, 80, 0.04) 0%, rgba(5, 5, 5, 0) 70%);
-      pointer-events: none;
-      z-index: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 1s ease;
-    }
-
-    .spotlight-hero {
-      position: absolute;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12) 0%, transparent 35%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .perspective-container {
-      perspective: 3000px;
-    }
-
-    .hover-3d-card {
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-      transform-style: preserve-3d;
-    }
-
-    .reveal-hidden {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1.8s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    .reveal-visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-
-    .stagger-reveal > * {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .platinum-gradient-section {
-      background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%);
-    }
-
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 24;
-    }
-
-    .titanium-accent {
-      color: #e3e2e0;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-      letter-spacing: -0.02em;
-    }
-
-    .micro-spec {
-      font-family: 'DM Sans';
-      font-size: 8px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      opacity: 0.4;
-    }
-
-    .ultra-thin-divider {
-      height: 0.5px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    }
-  </style>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "on-surface-variant": "#d0c5af",
-            "on-secondary": "#303130",
-            "on-error": "#690005",
-            "tertiary-container": "#b4b2b2",
-            "inverse-on-surface": "#313030",
-            "on-tertiary-fixed": "#1c1b1b",
-            "surface-bright": "#3a3939",
-            "inverse-primary": "#735c00",
-            "outline": "#99907c",
-            "surface": "#131313",
-            "on-background": "#e5e2e1",
-            "surface-container-highest": "#353534",
-            "surface-container-lowest": "#0e0e0e",
-            "on-tertiary-container": "#454544",
-            "tertiary-fixed": "#e5e2e1",
-            "error-container": "#93000a",
-            "surface-dim": "#131313",
-            "primary-fixed-dim": "#e9c349",
-            "on-primary": "#3c2f00",
-            "on-primary-fixed": "#241a00",
-            "surface-tint": "#e9c349",
-            "on-secondary-fixed": "#1b1c1b",
-            "outline-variant": "#4d4635",
-            "secondary": "#c7c6c4",
-            "secondary-container": "#464746",
-            "surface-variant": "#353534",
-            "surface-container-low": "#1c1b1b",
-            "on-tertiary": "#313030",
-            "inverse-surface": "#e5e2e1",
-            "tertiary-fixed-dim": "#c8c6c5",
-            "primary": "#f2ca50",
-            "surface-container": "#201f1f",
-            "secondary-fixed": "#e3e2e0",
-            "on-secondary-fixed-variant": "#464746",
-            "on-error-container": "#ffdad6",
-            "secondary-fixed-dim": "#c7c6c4",
-            "on-secondary-container": "#b5b5b3",
-            "primary-container": "#d4af37",
-            "tertiary": "#d0cdcd",
-            "on-tertiary-fixed-variant": "#474746",
-            "error": "#ffb4ab",
-            "surface-container-high": "#2a2a2a",
-            "primary-fixed": "#ffe088",
-            "on-primary-fixed-variant": "#574500",
-            "background": "#131313",
-            "on-primary-container": "#554300",
-            "on-surface": "#e5e2e1"
-          },
-          "borderRadius": {
-            "DEFAULT": "0px",
-            "lg": "0.125rem",
-            "xl": "0.25rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "margin-desktop": "100px",
-            "unit": "8px",
-            "margin-mobile": "32px",
-            "gutter": "40px",
-            "container-max": "1600px"
-          },
-          "fontFamily": {
-            "body-md": ["DM Sans"],
-            "body-lg": ["DM Sans"],
-            "headline-lg": ["Bodoni Moda"],
-            "display-lg": ["Bodoni Moda"],
-            "label-caps": ["DM Sans"],
-            "headline-md": ["Bodoni Moda"],
-            "headline-lg-mobile": ["Bodoni Moda"]
-          },
-          "fontSize": {
-            "body-md": ["16px", {"lineHeight": "32px", "letterSpacing": "0.05em", "fontWeight": "300"}],
-            "body-lg": ["20px", {"lineHeight": "36px", "letterSpacing": "0.06em", "fontWeight": "300"}],
-            "headline-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-            "display-lg": ["110px", {"lineHeight": "110px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
-            "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.4em", "fontWeight": "600"}],
-            "headline-md": ["42px", {"lineHeight": "52px", "fontWeight": "600"}],
-            "headline-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}]
-          }
-        },
-      },
-    }
-  </script>
-</head>
-<body class="bg-surface font-body-md text-on-surface selection:bg-primary selection:text-on-primary">
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full bg-surface-container-lowest/80 backdrop-blur-3xl z-50 border-b border-white/5">
-<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-10 w-full max-w-container-max mx-auto">
-<div class="flex items-center gap-4">
-<div class="font-display-lg text-headline-md text-primary tracking-[-0.08em] cursor-pointer active:scale-95 transition-all duration-700">AURA</div>
-<div class="hidden md:block w-12 ultra-thin-divider rotate-90 opacity-20"></div>
-<div class="hidden md:block micro-spec">REV. 5.0.0_STABLE</div>
-</div>
-<div class="hidden md:flex gap-16 items-center">
-<a class="font-label-caps text-label-caps uppercase text-on-surface-variant/60 hover:text-primary transition-all duration-700" href="#">Heritage</a>
-<a class="font-label-caps text-label-caps uppercase text-on-surface-variant/60 hover:text-primary transition-all duration-700" href="#">Innovation</a>
-<a class="font-label-caps text-label-caps uppercase text-on-surface-variant/60 hover:text-primary transition-all duration-700" href="#">Collection</a>
-<a class="font-label-caps text-label-caps uppercase text-on-surface-variant/60 hover:text-primary transition-all duration-700" href="#">Concierge</a>
-</div>
-<div class="flex items-center gap-8">
-<button class="font-label-caps text-label-caps uppercase text-primary border-b border-primary/20 pb-1 hover:border-primary transition-all duration-1000">
-        Inquire
-      </button>
-<button class="md:hidden text-primary">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</nav>
-<!-- Custom Aura Interaction Layer -->
-<div class="aura-glow" id="aura-cursor"></div>
-<!-- Hero Section -->
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero-section">
-<div class="spotlight-hero" id="hero-spotlight"></div>
-<div class="absolute inset-0 z-0">
-<img class="w-full h-full object-cover opacity-50 brightness-[0.1] scale-100" data-alt="A macro shot of a polished obsidian sculpture with sharp geometric angles. Soft, directional platinum lighting catches the razor-thin edges, creating a high-contrast, cinematic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWy4y8mEgjO0APYp0781QXK1pFcS4q6npofxutKr18Yg9sxZ-MLXGeEggfOQf2p8dkDchSb47ZZIUJpyiVK5Z8HCFu_xgGs0S7pux5poVzeQYxyBtB-3G5YKv12k9j-eGHzxFM73ko6XbyG2SikUmdvREUO17lO6_nPMahFkmEJUUIgcH4gMmD6Kj-5mnjBBWI34RN7XE0qJlK81tdSmevH0UgezM0NXWThKaeBj9gY0BudaIoOiEUrA6Cca7T3HcwzSZxFglUtoqw"/>
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-black"></div>
-</div>
-<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-6xl mx-auto stagger-reveal" id="hero-content">
-<div class="micro-spec mb-6 tracking-[0.8em] opacity-40">Classification: Ultra-Luxury Tier 1</div>
-<h1 class="font-display-lg text-headline-lg-mobile md:text-[130px] md:leading-[120px] text-on-surface mb-10 tracking-[-0.04em] uppercase">
-      The $5M <br/> <span class="text-primary italic font-light titanium-accent">Standard</span>
-</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant/80 mb-20 max-w-3xl mx-auto tracking-[0.08em] leading-[2] font-light">
-      A monumental achievement in engineering. Designed exclusively for the visionaries who define the global horizon. Experience $5M worth of pure precision.
-    </p>
-<div class="flex flex-col md:flex-row justify-center items-center gap-10">
-<button class="metallic-gold-bg text-on-primary font-label-caps text-label-caps px-20 py-8 rounded-sm hover:scale-[1.02] hover:brightness-110 active:scale-95 transition-all duration-1000 uppercase tracking-[0.5em]">
-        Acquire Privately
-      </button>
-</div>
-</div>
-<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-20">
-<span class="micro-spec">Sequence: Vertical Scroll</span>
-<div class="w-[0.5px] h-20 bg-gradient-to-b from-primary/60 to-transparent"></div>
-</div>
-</section>
-<!-- Features Grid -->
-<section class="py-64 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto reveal-hidden">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-<!-- Card 1: Heritage -->
-<div class="brushed-titanium-border glass-card p-16 group hover:shadow-[0_0_60px_rgba(255,255,255,0.02)] transition-all duration-1000">
-<div class="micro-spec mb-8">SPEC_001 / GENESIS</div>
-<div class="mb-12 text-primary group-hover:scale-105 transition-transform duration-1000">
-<span class="material-symbols-outlined text-6xl" data-icon="history_edu">history_edu</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-8">Heritage</h3>
-<div class="ultra-thin-divider mb-8 opacity-20"></div>
-<p class="font-body-md text-body-md text-on-surface-variant/50 leading-relaxed font-light">
-        A century of uncompromising craftsmanship distilled into every single detail of our $5M futuristic vision.
-      </p>
-</div>
-<!-- Card 2: Precision -->
-<div class="brushed-titanium-border glass-card p-16 group hover:shadow-[0_0_60px_rgba(255,255,255,0.02)] transition-all duration-1000 md:-translate-y-24">
-<div class="micro-spec mb-8">SPEC_002 / CHRONOS</div>
-<div class="mb-12 text-secondary group-hover:scale-105 transition-transform duration-1000">
-<span class="material-symbols-outlined text-6xl" data-icon="architecture">architecture</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-8">Precision</h3>
-<div class="ultra-thin-divider mb-8 opacity-20"></div>
-<p class="font-body-md text-body-md text-on-surface-variant/50 leading-relaxed font-light">
-        Micro-engineered components designed with surgical accuracy to ensure an unparalleled tactile experience at the highest level of luxury.
-      </p>
-</div>
-<!-- Card 3: Vision -->
-<div class="brushed-titanium-border glass-card p-16 group hover:shadow-[0_0_60px_rgba(255,255,255,0.02)] transition-all duration-1000">
-<div class="micro-spec mb-8">SPEC_003 / ORACLE</div>
-<div class="mb-12 text-primary group-hover:scale-105 transition-transform duration-1000">
-<span class="material-symbols-outlined text-6xl" data-icon="visibility">visibility</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-8">Vision</h3>
-<div class="ultra-thin-divider mb-8 opacity-20"></div>
-<p class="font-body-md text-body-md text-on-surface-variant/50 leading-relaxed font-light">
-        Anticipating the needs of the global elite through revolutionary AI integration and avant-garde $5M architectural design.
-      </p>
-</div>
-</div>
-</section>
-<!-- Expanded Showcase Section -->
-<section class="py-64 bg-surface-container-lowest border-y border-white/5 reveal-hidden">
-<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="text-center mb-32">
-<div class="inline-block font-label-caps text-label-caps text-secondary/40 tracking-[0.8em] uppercase mb-10 border-b border-secondary/10 pb-4">
-        Archive / Series Obsidian
-      </div>
-<h2 class="font-display-lg text-headline-lg text-on-surface tracking-[-0.03em] uppercase">The $5M Collection</h2>
-</div>
-<div class="perspective-container group mb-48">
-<div class="hover-3d-card relative overflow-hidden rounded-sm brushed-titanium-border shadow-[0_80px_160px_-40px_rgba(0,0,0,0.8)]">
-<img class="w-full aspect-[21/9] object-cover transition-transform duration-[5s] scale-110 group-hover:scale-105" data-alt="A minimalist tech object made of brushed titanium and dark glass resting on a monolithic marble plinth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl72EZi0c3GOuN7N08qnBS11qaphUXxhGpsFITNYdyUUxE_JU4hVsVkLhzqelKNZwoB1ovM5F5nXbAap46S6-cmO1hZmOvHUi2WE22_WqjTrN57BDI36GePwhRJuLvA3SrOR5UvGTtkNGm0L30_OYoLPhxmaOkn7LzY2mKGmk3iGeujSuJiwtd54E2fhziCYWK8jEmtZf2Bg9ExQ-49pd-aF8kLwBCZ86aPAtf0Y6TAE3FRG7ZZsR_oEFo6Tj2_9miawcKDaDsuAgu"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-<div class="absolute bottom-16 left-16 right-16 flex justify-between items-end">
-<div>
-<div class="micro-spec mb-4 opacity-60">ID: MONOLITH-001 / CORE</div>
-<h4 class="font-headline-md text-headline-md text-white tracking-widest uppercase">OBSIDIAN PRIME</h4>
-</div>
-<div class="flex flex-col items-end gap-6">
-<div class="micro-spec text-primary">VALUATION: $5,000,000.00 USD</div>
-<button class="bg-white/5 backdrop-blur-3xl px-12 py-5 border border-white/10 rounded-sm text-white font-label-caps text-label-caps tracking-[0.5em] hover:bg-white/10 transition-all duration-700">Explore Detail</button>
-</div>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-48 items-start">
-<div class="reveal-hidden">
-<div class="micro-spec mb-8">PHILOSOPHY / STRENGTH</div>
-<h2 class="font-display-lg text-headline-lg text-on-surface mb-12 leading-[1.0] uppercase">Density <br/> Without <br/> <span class="italic text-primary titanium-accent">Boundary.</span></h2>
-<div class="w-32 h-[0.5px] bg-primary/40"></div>
-</div>
-<div class="reveal-hidden" style="transition-delay: 0.4s;">
-<p class="font-body-lg text-body-lg text-on-surface-variant/70 mb-16 leading-[2.2] font-light">
-          Every element of AURA is stress-tested against the future. We don't just build products; we curate $5M experiences that define the boundaries of what is possible. Our use of aerospace-grade titanium and liquid mercury finishing represents a new epoch in ultra-high-end materiality.
-        </p>
-<a class="group inline-flex items-center gap-10 text-primary font-label-caps text-label-caps tracking-[0.5em] uppercase border-b border-primary/10 pb-6 hover:border-primary transition-all duration-1000" href="#">
-          View full archive
-          <span class="material-symbols-outlined group-hover:translate-x-6 transition-transform duration-1000">east</span>
-</a>
-</div>
-</div>
-</div>
-</section>
-<!-- CTA Section -->
-<section class="relative py-72 overflow-hidden reveal-hidden">
-<div class="absolute inset-0 platinum-gradient-section z-0"></div>
-<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[800px] bg-primary/5 blur-[200px] rounded-full"></div>
-<div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-6xl mx-auto text-center stagger-reveal">
-<span class="font-label-caps text-label-caps text-secondary/40 tracking-[1em] uppercase mb-12 block">V.I.P Private Access Invitation</span>
-<h2 class="font-display-lg text-headline-lg-mobile md:text-[100px] text-on-surface mb-24 tracking-[-0.05em] uppercase leading-none font-black">Commence <br/> Acquisition</h2>
-<div class="flex flex-col md:flex-row justify-center items-center gap-12">
-<button class="metallic-gold-bg text-on-primary font-label-caps text-label-caps px-24 py-8 rounded-sm hover:scale-[1.05] active:scale-95 transition-all duration-1000 uppercase tracking-[0.6em] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
-        Secure $5M Tier
-      </button>
-<button class="brushed-titanium-border glass-card text-on-surface font-label-caps text-label-caps px-24 py-8 rounded-sm hover:bg-white/5 transition-all duration-1000 uppercase tracking-[0.6em] backdrop-blur-3xl border-white/5">
-        Concierge Liaison
-      </button>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest py-32 border-t border-white/5">
-<div class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop gap-gutter max-w-container-max mx-auto">
-<div class="mb-16 md:mb-0">
-<div class="font-display-lg text-headline-md text-primary mb-8 tracking-tighter">AURA</div>
-<p class="font-body-md text-on-surface-variant/40 max-w-xs font-light leading-relaxed">The definitive standard in $5,000,000 ultra-exclusive technological craftsmanship. Reserved for the 0.01%.</p>
-</div>
-<div class="grid grid-cols-2 md:flex gap-20 md:gap-32">
-<div class="flex flex-col gap-6">
-<span class="micro-spec text-primary mb-4 opacity-60">Legal Protocol</span>
-<a class="font-label-caps text-label-caps text-on-surface-variant/50 hover:text-white transition-all duration-700" href="#">Terms of Access</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant/50 hover:text-white transition-all duration-700" href="#">Privacy Encryption</a>
-</div>
-<div class="flex flex-col gap-6">
-<span class="micro-spec text-primary mb-4 opacity-60">Operations</span>
-<a class="font-label-caps text-label-caps text-on-surface-variant/50 hover:text-white transition-all duration-700" href="#">Press Inquiries</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant/50 hover:text-white transition-all duration-700" href="#">Secure Contact</a>
-</div>
-</div>
-</div>
-<div class="mt-32 text-center px-margin-mobile">
-<div class="ultra-thin-divider mb-16 opacity-10"></div>
-<div class="font-label-caps text-[9px] text-on-surface-variant/20 tracking-[1.2em]">
-      © 2024 AURA EXCLUSIVE. FIVE MILLION DOLLAR SERIES. ALL RIGHTS RESERVED.
-    </div>
-</div>
-</footer>
-<script>
-  // Liquid Mercury Cursor & Lighting
-  const auraCursor = document.getElementById('aura-cursor');
-  document.addEventListener('mousemove', (e) => {
-    auraCursor.style.opacity = '1';
-    auraCursor.style.left = e.clientX + 'px';
-    auraCursor.style.top = e.clientY + 'px';
-
-    // Liquid mercury variable update
-    document.body.style.setProperty('--mouse-x', `${(e.clientX / window.innerWidth) * 100}%`);
-    document.body.style.setProperty('--mouse-y', `${(e.clientY / window.innerHeight) * 100}%`);
-  });
-
-  document.addEventListener('mouseleave', () => {
-    auraCursor.style.opacity = '0';
-  });
-
-  // Hero Section Spotlight
-  const heroSpotlight = document.getElementById('hero-spotlight');
-  document.addEventListener('mousemove', (e) => {
-    const rect = heroSpotlight.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    heroSpotlight.style.setProperty('--mouse-x', `${x}%`);
-    heroSpotlight.style.setProperty('--mouse-y', `${y}%`);
-  });
-
-  // Deliberate 3D Hover Effect
-  const card3d = document.querySelector('.hover-3d-card');
-  const container3d = document.querySelector('.perspective-container');
-
-  container3d.addEventListener('mousemove', (e) => {
-    const rect = container3d.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    // Slower, heavier rotation
-    const rotateX = (y - centerY) / 40;
-    const rotateY = (centerX - x) / 40;
-
-    card3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-  });
-
-  container3d.addEventListener('mouseleave', () => {
-    card3d.style.transform = `rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-  });
-
-  // Slow, Heavy Scroll Reveal
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal-visible');
-        
-        const staggerChildren = entry.target.querySelectorAll('.stagger-reveal > *');
-        if (staggerChildren.length > 0) {
-          staggerChildren.forEach((child, index) => {
-            setTimeout(() => {
-              child.style.transition = 'all 2.2s cubic-bezier(0.19, 1, 0.22, 1)';
-              child.style.opacity = '1';
-              child.style.transform = 'translateY(0)';
-            }, index * 400); // Slower stagger
-          });
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Cinzel Decorative"', 'serif'],
+                        body: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        vanta: '#0a0a0a',
+                        crimson: '#D91636',
+                        titanium: '#E2E8F0',
+                    },
+                    backgroundImage: {
+                        'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')",
+                    }
+                }
+            }
         }
-      }
-    });
-  }, { threshold: 0.05 });
+    </script>
 
-  document.querySelectorAll('.reveal-hidden').forEach(el => revealObserver.observe(el));
+    <style>
+        /* Custom Styles for Brutal Luxury */
+        body {
+            background-color: #0a0a0a;
+            color: #E2E8F0;
+            overflow-x: hidden;
+        }
 
-  // High-latency instant reveal for hero
-  window.addEventListener('load', () => {
-    const heroStagger = document.querySelectorAll('#hero-content > *');
-    heroStagger.forEach((child, index) => {
-      setTimeout(() => {
-        child.style.transition = 'all 2.5s cubic-bezier(0.19, 1, 0.22, 1)';
-        child.style.opacity = '1';
-        child.style.transform = 'translateY(0)';
-      }, 500 + (index * 500));
-    });
-  });
-</script>
-</body></html>
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            mix-blend-mode: overlay;
+        }
+
+        .crimson-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(217, 22, 54, 0.15) 0%, rgba(10, 10, 10, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        /* Staggered Reveal Animation */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Diagonal Cut Backgrounds */
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 10vh, 100% 100%, 0 calc(100% - 10vh));
+        }
+
+        /* Magnetic Button Effect */
+        .magnetic-btn {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .magnetic-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: rgba(217, 22, 54, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            transition: transform 0.5s ease-out;
+            z-index: -1;
+        }
+
+        .magnetic-btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Parallax Image Wrapper */
+        .parallax-img-wrapper {
+            overflow: hidden;
+        }
+
+        .parallax-img {
+            transition: transform 0.1s ease-out;
+            transform: scale(1.1);
+        }
+
+        /* Outline Text */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(226, 232, 240, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D91636;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-crimson selection:text-white antialiased">
+
+    <!-- Film Grain Overlay -->
+    <div class="noise-overlay bg-noise"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 top-0 px-8 py-6 mix-blend-difference flex justify-between items-center">
+        <div class="font-display font-bold text-3xl tracking-widest text-white">AEGIS</div>
+        <div class="hidden md:flex gap-12 font-body text-sm font-semibold tracking-[0.2em] uppercase text-white/70">
+            <a href="#vision" class="hover:text-white transition-colors duration-300">Vision</a>
+            <a href="#collection" class="hover:text-white transition-colors duration-300">Collection</a>
+            <a href="#acquire" class="hover:text-crimson transition-colors duration-300">Acquire</a>
+        </div>
+        <button class="md:hidden text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-32 pb-20 px-8 md:px-24 overflow-hidden">
+        <div class="crimson-glow top-1/4 left-1/4"></div>
+        
+        <div class="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end relative z-10">
+
+            <div class="w-full md:w-3/5 mb-16 md:mb-0">
+                <div class="overflow-hidden mb-4">
+                    <p class="font-body font-bold text-crimson tracking-[0.4em] uppercase text-sm reveal-up" style="transition-delay: 0.1s;">The Absolute Pinnacle</p>
+                </div>
+                <div class="overflow-hidden">
+                    <h1 class="font-display font-black text-6xl md:text-[9rem] leading-[0.85] text-white reveal-up" style="transition-delay: 0.3s;">
+                        POWER.<br>
+                        <span class="text-outline">REFINED.</span>
+                    </h1>
+                </div>
+                <div class="overflow-hidden mt-12">
+                    <p class="font-body font-light text-titanium/60 text-lg md:text-xl max-w-md leading-relaxed reveal-up" style="transition-delay: 0.5s;">
+                        Forged from aerospace titanium. Encased in vantablack glass. This is not a product. This is a $5M declaration of absolute supremacy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full md:w-2/5 flex justify-end">
+                <div class="reveal-up parallax-img-wrapper w-full max-w-sm aspect-[3/4] relative" style="transition-delay: 0.7s;">
+                    <!-- Abstract brutalist object representation -->
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
+                         alt="Abstract monolith"
+                         class="parallax-img w-full h-full object-cover filter grayscale contrast-125 brightness-75">
+                    <div class="absolute inset-0 border border-white/10 m-4"></div>
+
+                    <!-- Floating Data Box -->
+                    <div class="absolute -bottom-8 -left-8 bg-vanta border border-white/10 p-6 shadow-2xl">
+                        <p class="font-body text-xs text-white/40 tracking-widest uppercase mb-1">Valuation</p>
+                        <p class="font-display text-2xl text-white tracking-wider">$5,000,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Broken Grid Details Section -->
+    <section id="vision" class="py-32 px-8 md:px-24 bg-[#050505] relative clip-diagonal">
+        <div class="max-w-7xl mx-auto">
+
+            <div class="flex flex-col md:flex-row gap-20 items-center">
+                <!-- Large Typography Offset -->
+                <div class="w-full md:w-1/2 order-2 md:order-1 md:-mt-48">
+                    <h2 class="font-display text-5xl md:text-7xl text-white leading-tight reveal-up">
+                        UNYIELDING <br>
+                        <span class="text-crimson italic">PRECISION.</span>
+                    </h2>
+                    <div class="mt-12 space-y-8">
+                        <div class="reveal-up border-t border-white/10 pt-6">
+                            <h3 class="font-body text-sm font-bold tracking-[0.2em] text-white uppercase mb-3">01 // Architecture</h3>
+                            <p class="font-body text-titanium/60 text-lg">Milled from a single block of military-grade carbon composite. Tolerances measured in microns, not millimeters.</p>
+                        </div>
+                        <div class="reveal-up border-t border-white/10 pt-6" style="transition-delay: 0.1s;">
+                            <h3 class="font-body text-sm font-bold tracking-[0.2em] text-white uppercase mb-3">02 // Exclusivity</h3>
+                            <p class="font-body text-titanium/60 text-lg">Limited to 5 units globally. Ownership is by invitation only, subject to rigorous vetting.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlapping Image -->
+                <div class="w-full md:w-1/2 order-1 md:order-2 reveal-up">
+                    <div class="aspect-square bg-white/5 relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2487&auto=format&fit=crop"
+                             alt="Precision engineering detail"
+                             class="w-full h-full object-cover filter grayscale opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-vanta via-transparent to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Immersive Feature/Quote -->
+    <section class="py-48 relative overflow-hidden flex items-center justify-center text-center px-4">
+        <div class="crimson-glow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto">
+            <h2 class="font-display text-4xl md:text-6xl text-white/90 leading-[1.4] reveal-up">
+                "We do not design for the market. <br> We design to <span class="text-crimson border-b border-crimson/30">obliterate</span> it."
+            </h2>
+            <p class="mt-12 font-body text-sm tracking-[0.4em] text-titanium/40 uppercase reveal-up" style="transition-delay: 0.2s;">— The Chief Architect</p>
+        </div>
+    </section>
+
+    <!-- Acquisition CTA (Brutalist style) -->
+    <section id="acquire" class="py-32 px-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-16">
+            <div class="w-full md:w-2/3 reveal-up">
+                <h2 class="font-display text-5xl md:text-8xl text-white leading-none mb-8">SECURE <br> YOUR LEGACY.</h2>
+                <p class="font-body text-xl text-titanium/60 max-w-lg mb-12">The $5M allocation window closes imminently. Submit your credentials for review.</p>
+            </div>
+
+            <div class="w-full md:w-1/3 reveal-up flex md:justify-end" style="transition-delay: 0.2s;">
+                <button class="magnetic-btn bg-white text-vanta font-body font-bold text-sm tracking-[0.3em] uppercase px-12 py-8 w-full md:w-auto hover:bg-crimson hover:text-white transition-colors duration-300">
+                    Initiate Contact
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimalist Footer -->
+    <footer class="py-12 px-8 border-t border-white/5 bg-[#020202]">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="font-display font-bold text-2xl tracking-widest text-white/30">AEGIS</div>
+            <div class="font-body text-xs tracking-[0.2em] text-white/30 uppercase">
+                &copy; 2025 AEGIS Syndicate. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interaction -->
+    <script>
+        // Intersection Observer for Staggered Reveals
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Mouse Parallax for specific images
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            document.querySelectorAll('.parallax-img').forEach(img => {
+                img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Magnetic Button Logic
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    </script>
+</body>
+</html>
