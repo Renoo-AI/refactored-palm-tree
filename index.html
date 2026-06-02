@@ -1,24 +1,44 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr" dir="ltr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  
+
   <title>Gamme de Parfum | L'essence de votre signature</title>
   <meta name="description" content="Découvrez Gamme de Parfum : Parfums inspirés des grandes marques, qualité premium et livraison en Tunisie. Commandez facilement sur WhatsApp.">
-  <meta name="theme-color" content="#fcfaf8">
-  
+  <meta name="theme-color" content="#fbf9f7">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+  <!-- Tailwind -->
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
-    @import "tailwindcss";
     @theme {
-      --color-g-primary: #f7f3f0;
-      --color-g-secondary: #1a1a1a;
-      --color-g-accent-1: #c5a47e;
-      --color-g-accent-2: #e4d3b6;
-      --color-g-bg: #fcfaf8;
-      --color-g-text: #333333;
-      --color-g-text-light: #666666; /* Fixed undefined class */
+      --color-surface: #fbf9f7;
+      --color-surface-dim: #dbdad8;
+      --color-surface-container: #efedec;
+      --color-surface-container-low: #f5f3f1;
+      --color-surface-container-lowest: #ffffff;
+
+      --color-on-surface: #1b1c1b;
+      --color-on-surface-variant: #444748;
+
+      --color-primary: #000000;
+      --color-on-primary: #ffffff;
+
+      --color-secondary: #745a39;
+      --color-on-secondary: #ffffff;
+
+      --color-gold: #c29965; /* Muted Gold */
+
       --font-display: "Playfair Display", serif;
       --font-sans: "Inter", sans-serif;
       --font-arabic: "Tajawal", sans-serif;
@@ -26,136 +46,119 @@
   </style>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Tajawal:wght@300;400;500;700&display=swap');
-
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
-      scroll-behavior: smooth;
-    }
-
     body {
-      background-color: #fcfaf8;
-      color: #333333;
+      background-color: var(--color-surface);
+      color: var(--color-on-surface);
+      font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     ::selection {
-      background-color: #c5a47e;
-      color: #fff;
-    }
-    ::-moz-selection {
-      background-color: #c5a47e;
+      background-color: var(--color-gold);
       color: #fff;
     }
 
-    /* Scroll Animations */
-    .reveal {
+    /* GSAP Reveal Classes */
+    .reveal-up {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(40px);
     }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .delay-1 { transition-delay: 0.1s; }
-    .delay-2 { transition-delay: 0.15s; }
-    .delay-3 { transition-delay: 0.2s; }
-    .delay-4 { transition-delay: 0.3s; }
 
-    /* Navbar Scroll State - Luxury Glassmorphism */
+    .reveal-fade {
+      opacity: 0;
+    }
+
+    /* Luxury Glassmorphism Navbar */
     #navbar {
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #navbar.scrolled {
-      background-color: rgba(252, 250, 248, 0.9);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom-color: rgba(197, 164, 126, 0.2);
+      background-color: rgba(251, 249, 247, 0.85);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-bottom: 1px solid rgba(219, 218, 216, 0.5); /* surface-dim */
       padding-top: 1rem;
       padding-bottom: 1rem;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
     }
     #navbar:not(.scrolled) {
       background-color: transparent;
-      border-bottom-color: transparent;
-      padding-top: 1.5rem;
-      padding-bottom: 1.5rem;
-    }
-    @media (min-width: 1024px) {
-      #navbar:not(.scrolled) {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-    }
-    
-    #logo { transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-    #navbar.scrolled #logo { height: 2.25rem; }
-    @media (min-width: 1024px) {
-      #navbar.scrolled #logo { height: 2.5rem; }
+      border-bottom: 1px solid transparent;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
-    /* Mobile Menu - Cinematic Reveal */
+    /* Mobile Menu Overlay */
     #mobile-menu {
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       opacity: 0;
       transform: translateY(-20px);
       pointer-events: none;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background-color: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      background-color: rgba(251, 249, 247, 0.95);
     }
     #mobile-menu.open {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
-    
-    /* Ethereal Floating Animation for Hero Perfume */
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-12px); }
-      100% { transform: translateY(0px); }
-    }
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
 
-    /* Luxury Editorial Image Zoom */
-    .img-hover-zoom {
-      transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .group:hover .img-hover-zoom {
-      transform: scale(1.08);
-    }
-
-    /* Magnetic Button Sweep Effect */
-    .btn-sweep {
+    /* Buttons: Sharp 0px corners, reveal hover */
+    .btn-lux {
       position: relative;
       overflow: hidden;
+      border-radius: 0; /* Strict 0px rule */
       z-index: 1;
+      transition: color 0.4s ease, border-color 0.4s ease;
     }
-    .btn-sweep::before {
+    .btn-lux::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
+      left: -100%;
+      width: 100%;
       height: 100%;
-      width: 0;
-      background-color: var(--color-g-accent-1);
-      transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: -1;
     }
-    .btn-sweep:hover::before {
-      width: 100%;
+    .btn-lux:hover::before {
+      transform: translateX(100%);
     }
-    .btn-sweep:hover {
-      color: #fff !important;
-      border-color: var(--color-g-accent-1) !important;
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
     }
-    
+    .btn-primary::before {
+      background-color: var(--color-gold);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+    .btn-outline::before {
+      background-color: var(--color-primary);
+    }
+    .btn-outline:hover {
+      color: var(--color-on-primary);
+    }
+
+    /* Editorial Image Zoom */
+    .img-wrap {
+      overflow: hidden;
+    }
+    .img-zoom {
+      transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .group:hover .img-zoom {
+      transform: scale(1.05);
+    }
+
+    /* Decorative Elements */
     .link-underline {
       position: relative;
     }
@@ -167,345 +170,283 @@
       bottom: -2px;
       left: 0;
       background-color: currentColor;
-      transition: width 0.3s ease;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .link-underline:hover::after {
       width: 100%;
     }
+
+    /* Chip Styling */
+    .chip {
+      border-radius: 9999px; /* Exception to the sharp corner rule */
+      padding: 0.25rem 0.75rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      font-size: 10px;
+    }
+
   </style>
 </head>
-<body class="bg-g-bg text-g-text font-sans antialiased flex flex-col min-h-screen">
-  
-  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 border-b border-transparent">
-    <div class="w-full max-w-[1200px] mx-auto px-6 lg:px-12 flex justify-between items-center relative">
-      
-      <!-- Left Side Language / Location -->
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+
+  <nav id="navbar" class="fixed top-0 left-0 w-full z-50">
+    <div class="w-full max-w-[1440px] mx-auto px-6 lg:px-20 flex justify-between items-center">
+
+      <!-- Left Side Location -->
       <div class="hidden lg:flex flex-1 items-center gap-6">
-        <span class="text-[11px] font-medium uppercase tracking-[0.2em] text-g-secondary/60">Tunisie</span>
-        <div class="w-8 h-px bg-g-secondary/20"></div>
+        <span class="text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant">Tunisie</span>
+        <div class="w-8 h-[1px] bg-on-surface-variant/30"></div>
       </div>
 
       <!-- Logo -->
       <div class="flex-1 flex justify-start lg:justify-center">
         <a href="#" aria-label="Accueil Gamme de Parfum">
-          <img 
-            id="logo"
-            src="https://dropshare.42web.io/1/files/k6O2Kb0JsP.png" 
-            alt="Gamme de Parfum" 
-            class="object-contain h-10 lg:h-12"
-          />
+          <img src="https://dropshare.42web.io/1/files/k6O2Kb0JsP.png" alt="Gamme de Parfum" class="object-contain h-8 lg:h-10 opacity-90"/>
         </a>
       </div>
 
-      <!-- Right Side Actions -->
+      <!-- Right Side Contact -->
       <div class="hidden lg:flex flex-1 justify-end items-center">
-        <a 
-          href="https://wa.me/21624791758" 
-          class="group flex items-center gap-3 text-g-secondary hover:text-g-accent-1 transition-colors duration-300"
-        >
-          <span class="text-[11px] font-medium uppercase tracking-[0.2em]">Contact</span>
-          <div class="w-8 h-8 rounded-full border border-g-secondary/20 group-hover:border-g-accent-1 flex items-center justify-center transition-all duration-300">
-             <div class="w-1.5 h-1.5 rounded-full bg-g-secondary group-hover:bg-g-accent-1 transition-colors duration-300"></div>
+        <a href="https://wa.me/21624791758" class="group flex items-center gap-4 text-on-surface hover:text-gold transition-colors duration-400">
+          <span class="text-[12px] font-semibold uppercase tracking-[0.15em]">Contact</span>
+          <div class="w-8 h-8 rounded-full border border-on-surface/20 group-hover:border-gold flex items-center justify-center transition-all duration-400">
+             <div class="w-1.5 h-1.5 rounded-full bg-on-surface group-hover:bg-gold transition-colors duration-400"></div>
           </div>
         </a>
       </div>
 
-      <!-- Mobile menu button -->
+      <!-- Mobile Menu Button -->
       <div class="lg:hidden flex-1 flex justify-end">
-        <button id="menu-btn" class="text-g-secondary p-2 -mr-2 z-50 relative focus:outline-none" aria-label="Menu">
-          <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="transition-opacity duration-300"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          <svg id="icon-close" class="hidden absolute top-2 right-0 transition-opacity duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        <button id="menu-btn" class="text-on-surface p-2 -mr-2 relative z-50 focus:outline-none" aria-label="Menu">
+          <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg id="icon-close" class="hidden absolute top-2 right-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Menu Fullscreen Overlay -->
-    <div id="mobile-menu" class="absolute top-full left-0 w-full shadow-2xl border-t border-g-accent-1/10 flex flex-col items-center py-12 px-6 lg:hidden">
-      <a href="#best-sellers" class="font-display text-2xl text-g-secondary mb-6 link-underline">Best Sellers</a>
-      <a href="#categories" class="font-display text-2xl text-g-secondary mb-8 link-underline">Collection</a>
-      <div class="w-12 h-px bg-g-accent-1/30 mb-8"></div>
-      <p dir="rtl" class="font-arabic text-g-secondary/80 text-lg">تركيب جميع انواع العطور</p>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="absolute top-full left-0 w-full shadow-sm border-t border-surface-dim/30 flex flex-col items-center py-16 px-6 lg:hidden">
+      <a href="#best-sellers" class="font-display text-3xl text-on-surface mb-8 link-underline">Best Sellers</a>
+      <a href="#categories" class="font-display text-3xl text-on-surface mb-10 link-underline">Collection</a>
+      <div class="w-12 h-[1px] bg-gold/50 mb-10"></div>
+      <p dir="rtl" class="font-arabic text-on-surface-variant text-lg">تركيب جميع انواع العطور</p>
     </div>
   </nav>
 
   <main class="flex-grow">
-    
-    <header class="relative min-h-[100svh] flex items-center bg-[#fcfaf8] pt-24 lg:pt-0 overflow-hidden">
-      <div class="absolute top-1/2 left-3/4 -translate-y-1/2 w-[800px] h-[800px] bg-g-accent-2/15 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-      
-      <div class="w-full max-w-[1200px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center z-10">
-        <div class="order-2 lg:order-1 pt-8 lg:pt-0 pb-16 lg:pb-0">
-          <div class="reveal flex items-center gap-4 mb-6">
-            <div class="w-10 h-px bg-g-accent-1"></div>
-            <span class="text-g-accent-1 text-[11px] font-semibold uppercase tracking-[0.25em]">
+
+    <!-- Hero Section -->
+    <header class="relative min-h-[100svh] flex items-center pt-24 lg:pt-0 overflow-hidden">
+      <div class="w-full max-w-[1440px] mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center z-10">
+
+        <!-- Text Content -->
+        <div class="lg:col-span-6 order-2 lg:order-1 pt-8 lg:pt-0 pb-16 lg:pb-0">
+          <div class="reveal-up flex items-center gap-4 mb-8">
+            <div class="w-12 h-[1px] bg-gold"></div>
+            <span class="text-gold text-[12px] font-semibold uppercase tracking-[0.15em]">
               Haute Parfumerie
             </span>
           </div>
-          
-          <h1 class="reveal delay-1 font-display text-[2.75rem] sm:text-6xl lg:text-[5.5rem] text-g-secondary leading-[1.05] tracking-tight mb-8">
-            L’essence de <br />
-            <span class="italic font-light">votre signature.</span>
+
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-[72px] text-on-surface leading-[1.1] tracking-[-0.02em] mb-8">
+            <div class="overflow-hidden"><span class="reveal-up block">L’essence de</span></div>
+            <div class="overflow-hidden"><span class="reveal-up block italic font-light">votre signature.</span></div>
           </h1>
-          
-          <div class="reveal delay-2">
-            <p class="text-g-text-light text-lg font-medium mb-4 max-w-[440px] leading-relaxed text-g-secondary">
-              Parfums inspirés des grandes marques — qualité premium — livraison en Tunisie.
+
+          <div class="reveal-fade">
+            <p class="font-sans text-on-surface-variant text-lg font-light mb-4 max-w-[480px] leading-[1.6]">
+              Parfums inspirés des grandes marques. Qualité premium et sillage inoubliable, livrés partout en Tunisie.
             </p>
-            
-            <p dir="rtl" class="font-arabic text-g-text-light text-lg mb-10 max-w-[420px] leading-relaxed">
+
+            <p dir="rtl" class="font-arabic text-on-surface-variant text-lg mb-12 max-w-[420px] leading-[1.8]">
               تركيب جميع انواع العطور بجودة عالية و فريدة من نوعها
             </p>
-            
-            <div class="flex flex-col sm:flex-row items-center gap-4">
-              <a href="#best-sellers" class="w-full sm:w-auto px-8 py-4 bg-g-secondary text-white text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-500 text-center rounded-[2px] btn-sweep">
-                Voir les best sellers
+
+            <div class="flex flex-col sm:flex-row items-center gap-6">
+              <a href="#best-sellers" class="btn-lux btn-primary w-full sm:w-auto px-10 py-5 text-[12px] font-semibold uppercase tracking-[0.15em] text-center">
+                Voir la collection
               </a>
-              <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20avoir%20des%20informations%20sur%20vos%20parfums." class="w-full sm:w-auto px-8 py-4 border border-g-secondary/20 text-g-secondary text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-500 text-center rounded-[2px] btn-sweep flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              <a href="https://wa.me/21624791758" class="btn-lux btn-outline w-full sm:w-auto px-10 py-5 text-[12px] font-semibold uppercase tracking-[0.15em] text-center flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
                 WhatsApp
               </a>
             </div>
           </div>
         </div>
 
-        <div class="reveal delay-1 order-1 lg:order-2 relative mx-auto lg:ml-auto w-full max-w-[480px]">
-          <div class="relative p-3 border border-g-accent-2/40 rounded-t-[200px]">
-            <div class="overflow-hidden rounded-t-[190px] bg-g-primary">
-              <img src="https://dropshare.42web.io/1/files/7pOyelALBH.png" alt="Parfum Premium Gamme de Parfum" class="w-full aspect-[4/5] object-contain mix-blend-darken animate-float drop-shadow-2xl" />
-            </div>
+        <!-- Hero Image -->
+        <div class="lg:col-span-6 reveal-fade order-1 lg:order-2 w-full">
+          <!-- Asymmetrical placement -->
+          <div class="relative w-full max-w-[500px] ml-auto aspect-[4/5] bg-surface-container img-wrap rounded-none">
+            <img src="https://dropshare.42web.io/1/files/7pOyelALBH.png" alt="Parfum Premium" class="img-zoom w-full h-full object-contain p-8 mix-blend-multiply drop-shadow-xl" />
+            <!-- Decorative Minimal Lines -->
+            <div class="absolute top-0 right-0 w-1/4 h-[1px] bg-on-surface/20"></div>
+            <div class="absolute bottom-0 left-0 w-[1px] h-1/4 bg-on-surface/20"></div>
           </div>
         </div>
+
       </div>
     </header>
 
-    <section id="best-sellers" class="py-24 lg:py-32 bg-g-primary">
-      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
-        
-        <div class="reveal text-center mb-16">
-          <span class="text-g-accent-1 text-[11px] font-semibold uppercase tracking-[0.25em] mb-4 block">Notre Sélection</span>
-          <h2 class="font-display text-4xl lg:text-5xl text-g-secondary mb-4">Nos Best Sellers</h2>
-          <p class="text-g-text-light text-sm max-w-lg mx-auto">Envoyez-nous le nom du parfum souhaité sur WhatsApp pour passer commande rapidement.</p>
+    <!-- Best Sellers -->
+    <section id="best-sellers" class="py-[160px] bg-surface-container-lowest">
+      <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+
+        <div class="reveal-up text-center mb-24">
+          <span class="text-gold text-[12px] font-semibold uppercase tracking-[0.15em] mb-6 block">Notre Sélection</span>
+          <h2 class="font-display text-4xl lg:text-[48px] text-on-surface mb-6 leading-[1.2]">Nos Best Sellers</h2>
+          <p class="font-sans text-on-surface-variant text-base max-w-lg mx-auto font-light">Envoyez-nous le nom du parfum souhaité sur WhatsApp pour passer commande.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
           <!-- Card 1 -->
-          <div class="reveal group flex flex-col bg-[#fcfaf8] border border-[#f1eee9] rounded-[2px] p-6 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-400">
-            <div class="w-full flex items-center justify-center mb-6 pt-4 pb-8 transition-transform duration-500 group-hover:-translate-y-2">
-              <img src="https://dropshare.42web.io/1/files/BFycWV2DHa.png" alt="Vanilla Powder" class="w-[75%] h-auto object-contain drop-shadow-md img-hover-zoom mix-blend-darken">
+          <div class="reveal-up group flex flex-col">
+            <div class="w-full aspect-[4/5] bg-surface-container flex items-center justify-center mb-6 img-wrap rounded-none">
+              <img src="https://dropshare.42web.io/1/files/BFycWV2DHa.png" alt="Vanilla Powder" class="img-zoom w-[75%] h-auto object-contain mix-blend-multiply drop-shadow-md">
             </div>
-            <div class="text-center flex-grow flex flex-col">
-              <span class="text-[10px] text-g-accent-1 font-semibold uppercase tracking-[0.2em] mb-1 block">Oriental Vanillé</span>
-              <h3 class="font-display text-xl text-g-secondary mb-4">Vanilla Powder</h3>
-              
-              <div class="flex justify-center gap-2 mb-4">
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">30ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">50ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">100ml</span>
+            <div class="text-center flex flex-col flex-grow">
+              <h3 class="font-display text-2xl text-on-surface mb-2">Vanilla Powder</h3>
+              <span class="font-sans text-[12px] text-gold font-semibold uppercase tracking-[0.15em] mb-4">Oriental Vanillé</span>
+
+              <div class="flex justify-center gap-2 mb-6 font-sans">
+                <span class="chip text-on-surface-variant">30ml</span>
+                <span class="chip text-on-surface-variant">50ml</span>
+                <span class="chip text-on-surface-variant">100ml</span>
               </div>
-              <p class="font-display text-lg text-g-secondary mb-6 flex-grow">À partir de XX DT</p>
-              
-              <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20commander%20le%20parfum%20Vanilla%20Powder.%20Quels%20sont%20les%20prix%20pour%20les%20formats%2030ml,%2050ml%20et%20100ml%20?" class="inline-block mt-auto w-full py-3.5 border border-g-secondary/10 bg-g-bg text-g-secondary text-[11px] font-semibold uppercase tracking-widest transition-colors duration-400 rounded-[2px] btn-sweep flex justify-center items-center gap-2">
+
+              <a href="https://wa.me/21624791758?text=Commande Vanilla Powder" class="inline-block mt-auto link-underline font-sans text-[12px] font-semibold uppercase tracking-[0.15em] text-primary pb-1 mx-auto">
                 Commander
               </a>
             </div>
           </div>
 
           <!-- Card 2 -->
-          <div class="reveal delay-1 group flex flex-col bg-[#fcfaf8] border border-[#f1eee9] rounded-[2px] p-6 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-400">
-            <div class="w-full flex items-center justify-center mb-6 pt-4 pb-8 transition-transform duration-500 group-hover:-translate-y-2">
-              <img src="https://dropshare.42web.io/1/files/7pOyelALBH.png" alt="Kayali Vanilla 28" class="w-[75%] h-auto object-contain drop-shadow-md img-hover-zoom mix-blend-darken">
+          <div class="reveal-up group flex flex-col lg:mt-16">
+            <div class="w-full aspect-[4/5] bg-surface-container flex items-center justify-center mb-6 img-wrap rounded-none">
+              <img src="https://dropshare.42web.io/1/files/7pOyelALBH.png" alt="Kayali Vanilla 28" class="img-zoom w-[75%] h-auto object-contain mix-blend-multiply drop-shadow-md">
             </div>
-            <div class="text-center flex-grow flex flex-col">
-              <span class="text-[10px] text-g-accent-1 font-semibold uppercase tracking-[0.2em] mb-1 block">Gourmand Chaleureux</span>
-              <h3 class="font-display text-xl text-g-secondary mb-4">Kayali Vanilla 28</h3>
-              
-              <div class="flex justify-center gap-2 mb-4">
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">30ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">50ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">100ml</span>
+            <div class="text-center flex flex-col flex-grow">
+              <h3 class="font-display text-2xl text-on-surface mb-2">Kayali Vanilla 28</h3>
+              <span class="font-sans text-[12px] text-gold font-semibold uppercase tracking-[0.15em] mb-4">Gourmand Chaleureux</span>
+
+              <div class="flex justify-center gap-2 mb-6 font-sans">
+                <span class="chip text-on-surface-variant">30ml</span>
+                <span class="chip text-on-surface-variant">50ml</span>
+                <span class="chip text-on-surface-variant">100ml</span>
               </div>
-              <p class="font-display text-lg text-g-secondary mb-6 flex-grow">À partir de XX DT</p>
-              
-              <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20commander%20le%20parfum%20Kayali%20Vanilla%2028.%20Quels%20sont%20les%20prix%20pour%20les%20formats%2030ml,%2050ml%20et%20100ml%20?" class="inline-block mt-auto w-full py-3.5 border border-g-secondary/10 bg-g-bg text-g-secondary text-[11px] font-semibold uppercase tracking-widest transition-colors duration-400 rounded-[2px] btn-sweep flex justify-center items-center gap-2">
+
+              <a href="https://wa.me/21624791758?text=Commande Kayali Vanilla 28" class="inline-block mt-auto link-underline font-sans text-[12px] font-semibold uppercase tracking-[0.15em] text-primary pb-1 mx-auto">
                 Commander
               </a>
             </div>
           </div>
 
           <!-- Card 3 -->
-          <div class="reveal delay-2 group flex flex-col bg-[#fcfaf8] border border-[#f1eee9] rounded-[2px] p-6 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-400">
-            <div class="w-full flex items-center justify-center mb-6 pt-4 pb-8 transition-transform duration-500 group-hover:-translate-y-2">
-              <img src="https://dropshare.42web.io/1/files/tNwTVG3hda.png" alt="Kayali Pistachio" class="w-[75%] h-auto object-contain drop-shadow-md img-hover-zoom mix-blend-darken">
+          <div class="reveal-up group flex flex-col">
+            <div class="w-full aspect-[4/5] bg-surface-container flex items-center justify-center mb-6 img-wrap rounded-none">
+              <img src="https://dropshare.42web.io/1/files/tNwTVG3hda.png" alt="Kayali Pistachio" class="img-zoom w-[75%] h-auto object-contain mix-blend-multiply drop-shadow-md">
             </div>
-            <div class="text-center flex-grow flex flex-col">
-              <span class="text-[10px] text-g-accent-1 font-semibold uppercase tracking-[0.2em] mb-1 block">Gourmand Doux</span>
-              <h3 class="font-display text-xl text-g-secondary mb-4">Kayali Pistachio</h3>
-              
-              <div class="flex justify-center gap-2 mb-4">
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">30ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">50ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">100ml</span>
+            <div class="text-center flex flex-col flex-grow">
+              <h3 class="font-display text-2xl text-on-surface mb-2">Kayali Pistachio</h3>
+              <span class="font-sans text-[12px] text-gold font-semibold uppercase tracking-[0.15em] mb-4">Gourmand Doux</span>
+
+              <div class="flex justify-center gap-2 mb-6 font-sans">
+                <span class="chip text-on-surface-variant">30ml</span>
+                <span class="chip text-on-surface-variant">50ml</span>
+                <span class="chip text-on-surface-variant">100ml</span>
               </div>
-              <p class="font-display text-lg text-g-secondary mb-6 flex-grow">À partir de XX DT</p>
-              
-              <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20commander%20le%20parfum%20Kayali%20Pistachio.%20Quels%20sont%20les%20prix%20pour%20les%20formats%2030ml,%2050ml%20et%20100ml%20?" class="inline-block mt-auto w-full py-3.5 border border-g-secondary/10 bg-g-bg text-g-secondary text-[11px] font-semibold uppercase tracking-widest transition-colors duration-400 rounded-[2px] btn-sweep flex justify-center items-center gap-2">
+
+              <a href="https://wa.me/21624791758?text=Commande Kayali Pistachio" class="inline-block mt-auto link-underline font-sans text-[12px] font-semibold uppercase tracking-[0.15em] text-primary pb-1 mx-auto">
                 Commander
               </a>
             </div>
           </div>
 
           <!-- Card 4 -->
-          <div class="reveal delay-3 group flex flex-col bg-[#fcfaf8] border border-[#f1eee9] rounded-[2px] p-6 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-400">
-            <div class="w-full flex items-center justify-center mb-6 pt-4 pb-8 transition-transform duration-500 group-hover:-translate-y-2">
-              <img src="https://dropshare.42web.io/1/files/CyAKDnrRG8.png" alt="Kayali Coconut" class="w-[75%] h-auto object-contain drop-shadow-md img-hover-zoom mix-blend-darken">
+          <div class="reveal-up group flex flex-col lg:mt-16">
+            <div class="w-full aspect-[4/5] bg-surface-container flex items-center justify-center mb-6 img-wrap rounded-none">
+              <img src="https://dropshare.42web.io/1/files/CyAKDnrRG8.png" alt="Kayali Coconut" class="img-zoom w-[75%] h-auto object-contain mix-blend-multiply drop-shadow-md">
             </div>
-            <div class="text-center flex-grow flex flex-col">
-              <span class="text-[10px] text-g-accent-1 font-semibold uppercase tracking-[0.2em] mb-1 block">Floral Tropical</span>
-              <h3 class="font-display text-xl text-g-secondary mb-4">Kayali Coconut</h3>
-              
-              <div class="flex justify-center gap-2 mb-4">
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">30ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">50ml</span>
-                <span class="text-[10px] border border-g-secondary/20 text-g-text-light px-2 py-0.5 rounded-sm">100ml</span>
+            <div class="text-center flex flex-col flex-grow">
+              <h3 class="font-display text-2xl text-on-surface mb-2">Kayali Coconut</h3>
+              <span class="font-sans text-[12px] text-gold font-semibold uppercase tracking-[0.15em] mb-4">Floral Tropical</span>
+
+              <div class="flex justify-center gap-2 mb-6 font-sans">
+                <span class="chip text-on-surface-variant">30ml</span>
+                <span class="chip text-on-surface-variant">50ml</span>
+                <span class="chip text-on-surface-variant">100ml</span>
               </div>
-              <p class="font-display text-lg text-g-secondary mb-6 flex-grow">À partir de XX DT</p>
-              
-              <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20commander%20le%20parfum%20Kayali%20Coconut.%20Quels%20sont%20les%20prix%20pour%20les%20formats%2030ml,%2050ml%20et%20100ml%20?" class="inline-block mt-auto w-full py-3.5 border border-g-secondary/10 bg-g-bg text-g-secondary text-[11px] font-semibold uppercase tracking-widest transition-colors duration-400 rounded-[2px] btn-sweep flex justify-center items-center gap-2">
+
+              <a href="https://wa.me/21624791758?text=Commande Kayali Coconut" class="inline-block mt-auto link-underline font-sans text-[12px] font-semibold uppercase tracking-[0.15em] text-primary pb-1 mx-auto">
                 Commander
               </a>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <section id="categories" class="py-20 bg-g-bg relative border-b border-g-primary">
-      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
-        <div class="reveal text-center mb-12">
-          <h2 class="font-display text-3xl lg:text-4xl text-g-secondary">Le Catalogue</h2>
-          <p class="text-g-text-light text-sm mt-3">Trouvez la famille olfactive qui vous correspond.</p>
-        </div>
+    <!-- Categories / Catalogue -->
+    <section id="categories" class="py-[160px] bg-surface relative">
+      <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-8">
-          <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20découvrir%20vos%20parfums%20pour%20Femme." class="reveal group flex flex-col items-center bg-white p-6 border border-g-primary hover:border-g-accent-1/50 transition-all rounded-[2px]">
-            <h3 class="font-display text-xl text-g-secondary mb-2 group-hover:text-g-accent-1 transition-colors">Femme</h3>
-            <p class="text-g-text-light text-xs font-light text-center mb-4">Douces & florales</p>
-            <span class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary border-b border-g-secondary pb-0.5 group-hover:text-g-accent-1 group-hover:border-g-accent-1 transition-colors">Découvrir</span>
-          </a>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
-          <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20découvrir%20vos%20parfums%20pour%20Homme." class="reveal delay-1 group flex flex-col items-center bg-white p-6 border border-g-primary hover:border-g-accent-1/50 transition-all rounded-[2px]">
-            <h3 class="font-display text-xl text-g-secondary mb-2 group-hover:text-g-accent-1 transition-colors">Homme</h3>
-            <p class="text-g-text-light text-xs font-light text-center mb-4">Boisées & intenses</p>
-            <span class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary border-b border-g-secondary pb-0.5 group-hover:text-g-accent-1 group-hover:border-g-accent-1 transition-colors">Découvrir</span>
-          </a>
+          <div class="lg:col-span-4 reveal-up">
+            <h2 class="font-display text-4xl lg:text-[48px] text-on-surface mb-6 leading-[1.2]">Le Catalogue</h2>
+            <p class="font-sans text-on-surface-variant text-base font-light mb-10 leading-[1.6]">Trouvez la famille olfactive qui révèle votre personnalité. Explorez nos créations par genre ou offrez l'élégance avec nos coffrets.</p>
+          </div>
 
-          <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20découvrir%20vos%20parfums%20Mixtes." class="reveal delay-2 group flex flex-col items-center bg-white p-6 border border-g-primary hover:border-g-accent-1/50 transition-all rounded-[2px]">
-            <h3 class="font-display text-xl text-g-secondary mb-2 group-hover:text-g-accent-1 transition-colors">Mixte</h3>
-            <p class="text-g-text-light text-xs font-light text-center mb-4">Singulières & uniques</p>
-            <span class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary border-b border-g-secondary pb-0.5 group-hover:text-g-accent-1 group-hover:border-g-accent-1 transition-colors">Découvrir</span>
-          </a>
+          <div class="lg:col-span-8 grid grid-cols-2 gap-px bg-surface-dim">
+            <!-- Items -> sharp borders via 1px gap -->
+            <a href="https://wa.me/21624791758?text=Collection Femme" class="group flex flex-col items-center justify-center bg-surface py-16 px-6 transition-all hover:bg-surface-container-lowest">
+              <h3 class="font-display text-2xl text-on-surface mb-3">Femme</h3>
+              <p class="font-sans text-on-surface-variant text-sm font-light mb-6 text-center">Douces & florales</p>
+              <span class="font-sans text-[10px] uppercase tracking-[0.15em] font-semibold text-gold link-underline">Découvrir</span>
+            </a>
 
-          <a href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20découvrir%20vos%20Coffrets%20Cadeaux." class="reveal delay-3 group flex flex-col items-center bg-white p-6 border border-g-primary hover:border-g-accent-1/50 transition-all rounded-[2px]">
-            <h3 class="font-display text-xl text-g-secondary mb-2 group-hover:text-g-accent-1 transition-colors">Coffrets</h3>
-            <p class="text-g-text-light text-xs font-light text-center mb-4">Pour offrir avec élégance</p>
-            <span class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary border-b border-g-secondary pb-0.5 group-hover:text-g-accent-1 group-hover:border-g-accent-1 transition-colors">Découvrir</span>
-          </a>
-        </div>
-      </div>
-    </section>
+            <a href="https://wa.me/21624791758?text=Collection Homme" class="group flex flex-col items-center justify-center bg-surface py-16 px-6 transition-all hover:bg-surface-container-lowest">
+              <h3 class="font-display text-2xl text-on-surface mb-3">Homme</h3>
+              <p class="font-sans text-on-surface-variant text-sm font-light mb-6 text-center">Boisées & intenses</p>
+              <span class="font-sans text-[10px] uppercase tracking-[0.15em] font-semibold text-gold link-underline">Découvrir</span>
+            </a>
 
-    <section class="py-24 bg-g-primary">
-      <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
-        
-        <!-- Trust Stats -->
-        <div class="reveal flex flex-wrap justify-center items-center gap-8 lg:gap-16 mb-16 pb-12 border-b border-g-accent-2/30">
-          <div class="text-center">
-            <p class="font-display text-3xl lg:text-4xl text-g-secondary mb-1">17<span class="text-g-accent-1">K+</span></p>
-            <p class="text-[10px] uppercase font-semibold tracking-[0.2em] text-g-text-light">Abonnés IG</p>
-          </div>
-          <div class="hidden sm:block w-px h-10 bg-g-accent-2/50"></div>
-          <div class="text-center">
-            <p class="font-display text-3xl lg:text-4xl text-g-secondary mb-1">600<span class="text-g-accent-1">+</span></p>
-            <p class="text-[10px] uppercase font-semibold tracking-[0.2em] text-g-text-light">Créations</p>
-          </div>
-          <div class="hidden sm:block w-px h-10 bg-g-accent-2/50"></div>
-          <div class="text-center">
-            <p class="font-display text-3xl lg:text-4xl text-g-secondary mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="inline text-g-accent-1"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></p>
-            <p class="text-[10px] uppercase font-semibold tracking-[0.2em] text-g-text-light mt-1.5">Livraison Tunisie</p>
-          </div>
-        </div>
+            <a href="https://wa.me/21624791758?text=Collection Mixte" class="group flex flex-col items-center justify-center bg-surface py-16 px-6 transition-all hover:bg-surface-container-lowest">
+              <h3 class="font-display text-2xl text-on-surface mb-3">Mixte</h3>
+              <p class="font-sans text-on-surface-variant text-sm font-light mb-6 text-center">Singulières & uniques</p>
+              <span class="font-sans text-[10px] uppercase tracking-[0.15em] font-semibold text-gold link-underline">Découvrir</span>
+            </a>
 
-        <!-- Reviews -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-20">
-          <div class="reveal p-8 border border-g-accent-2/30 rounded-[2px] bg-white relative">
-             <span class="absolute -top-5 left-6 bg-white px-2 text-g-accent-1 font-display text-5xl opacity-50">"</span>
-             <p class="text-g-text font-light italic text-sm leading-relaxed mb-4 mt-2">Parfum très proche de l’original, tenue excellente.</p>
-             <div class="flex text-g-accent-1 mb-2 text-sm tracking-widest">★★★★★</div>
-             <p class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary">Client Vérifié</p>
+            <a href="https://wa.me/21624791758?text=Coffrets Cadeaux" class="group flex flex-col items-center justify-center bg-surface py-16 px-6 transition-all hover:bg-surface-container-lowest">
+              <h3 class="font-display text-2xl text-on-surface mb-3">Coffrets</h3>
+              <p class="font-sans text-on-surface-variant text-sm font-light mb-6 text-center">L'art d'offrir</p>
+              <span class="font-sans text-[10px] uppercase tracking-[0.15em] font-semibold text-gold link-underline">Découvrir</span>
+            </a>
           </div>
-          <div class="reveal delay-1 p-8 border border-g-accent-2/30 rounded-[2px] bg-white relative">
-             <span class="absolute -top-5 left-6 bg-white px-2 text-g-accent-1 font-display text-5xl opacity-50">"</span>
-             <p class="text-g-text font-light italic text-sm leading-relaxed mb-4 mt-2">Service rapide et emballage propre, je recommande !</p>
-             <div class="flex text-g-accent-1 mb-2 text-sm tracking-widest">★★★★★</div>
-             <p class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary">Client Vérifié</p>
-          </div>
-          <div class="reveal delay-2 p-8 border border-g-accent-2/30 rounded-[2px] bg-white relative">
-             <span class="absolute -top-5 left-6 bg-white px-2 text-g-accent-1 font-display text-5xl opacity-50">"</span>
-             <p class="text-g-text font-light italic text-sm leading-relaxed mb-4 mt-2">Très bon rapport qualité/prix. La fragrance tient toute la journée.</p>
-             <div class="flex text-g-accent-1 mb-2 text-sm tracking-widest">★★★★★</div>
-             <p class="text-[10px] uppercase tracking-widest font-semibold text-g-secondary">Client Vérifié</p>
-          </div>
-        </div>
 
-        <!-- Compact How It Works -->
-        <div class="bg-white p-8 lg:p-12 border border-g-primary rounded-[2px]">
-          <h3 class="font-display text-2xl text-center text-g-secondary mb-10">Commande simple & rapide</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div class="reveal">
-              <span class="text-g-accent-1 font-semibold text-lg mb-2 block">1. Choisissez</span>
-              <p class="text-xs text-g-text-light font-light">Trouvez le parfum souhaité dans notre catalogue.</p>
-            </div>
-            <div class="reveal delay-1">
-              <span class="text-g-accent-1 font-semibold text-lg mb-2 block">2. Contactez-nous</span>
-              <p class="text-xs text-g-text-light font-light">Envoyez-nous un message WhatsApp pour valider la commande.</p>
-            </div>
-            <div class="reveal delay-2">
-              <span class="text-g-accent-1 font-semibold text-lg mb-2 block">3. Recevez</span>
-              <p class="text-xs text-g-text-light font-light">Livraison rapide directement à votre porte.</p>
-            </div>
-          </div>
         </div>
 
       </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section class="py-24 lg:py-32 bg-[#1a1a1a] text-center">
+    <!-- Final CTA -->
+    <section class="py-[160px] bg-surface-container-lowest text-center border-t border-surface-dim/30">
       <div class="max-w-[800px] mx-auto px-6">
-        <div class="reveal">
-          <span class="text-g-accent-1 text-[11px] font-semibold uppercase tracking-[0.25em] mb-6 block">Commandez</span>
-          <h2 class="font-display text-4xl lg:text-[4rem] text-white mb-8 leading-tight">
-            Prêt à trouver <br class="hidden md:block"/> 
+        <div class="reveal-up">
+          <span class="text-gold text-[12px] font-semibold uppercase tracking-[0.15em] mb-8 block">Le Service</span>
+          <h2 class="font-display text-4xl lg:text-[64px] text-on-surface mb-10 leading-[1.1]">
+            Prêt à trouver <br/>
             <span class="italic font-light">votre signature ?</span>
           </h2>
-          <p class="text-[#a0a0a0] font-light text-base lg:text-lg mb-12 max-w-lg mx-auto">
-            Discutez en direct avec nous sur WhatsApp. Envoyez le nom du parfum et nous nous occupons du reste.
+          <p class="font-sans text-on-surface-variant font-light text-lg mb-16 max-w-lg mx-auto leading-[1.6]">
+            Discutez en direct avec nous. Une consultation personnalisée, un choix affirmé, une livraison soignée.
           </p>
 
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a 
-              href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20passer%20une%20commande." 
-              class="w-full sm:w-auto px-8 py-4 bg-g-accent-1 text-[#1a1a1a] text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-g-accent-2 transition-colors duration-300 flex items-center justify-center gap-2 rounded-[2px]"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              WhatsApp 24 79 17 58
-            </a>
-            <a 
-              href="https://wa.me/21624639601?text=Bonjour,%20je%20souhaite%20passer%20une%20commande." 
-              class="w-full sm:w-auto px-8 py-4 border border-[#333333] bg-transparent text-white text-[11px] font-semibold uppercase tracking-[0.2em] hover:border-g-accent-1 transition-colors duration-300 flex items-center justify-center gap-2 rounded-[2px]"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              WhatsApp 24 639 601
+          <div class="flex justify-center">
+            <a href="https://wa.me/21624791758" class="btn-lux btn-primary px-12 py-5 font-sans text-[12px] font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              Contacter le Concierge
             </a>
           </div>
         </div>
@@ -514,56 +455,26 @@
 
   </main>
 
-  <footer class="bg-[#111] pt-20 pb-10 text-center text-[#888] font-light text-sm">
-    <div class="max-w-[1200px] mx-auto px-6">
-      <a href="#">
-        <img 
-          src="https://dropshare.42web.io/1/files/k6O2Kb0JsP.png" 
-          alt="Gamme de Parfum" 
-          class="h-10 mx-auto mb-10 opacity-50 grayscale hover:opacity-100 transition-opacity duration-300"
-        />
-      </a>
-      
-      <p class="font-arabic text-xl mb-4 text-[#ddd]" dir="rtl">
-        تركيب جميع انواع العطور بجودة عالية
-      </p>
-      <p class="uppercase tracking-[0.2em] text-[10px] mb-12 text-g-accent-1">
-        Tunisie | Livraison Disponible
-      </p>
-      
-      <p class="text-[10px] uppercase tracking-[0.1em] opacity-50">
-        &copy; <span id="year"></span> Gamme de Parfum. Tous droits réservés.
-      </p>
-    </div>
-  </footer>
-
   <!-- Floating WhatsApp -->
-  <a 
-    href="https://wa.me/21624791758?text=Bonjour,%20je%20souhaite%20passer%20une%20commande." 
-    class="fixed bottom-6 right-6 lg:bottom-10 lg:right-10 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300 z-50"
-    aria-label="Commander sur WhatsApp"
-  >
-    <svg viewBox="0 0 24 24" class="w-7 h-7 fill-current"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <a href="https://wa.me/21624791758" class="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-400 z-50 rounded-full" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
-  <!-- JavaScript Behavior -->
   <script>
-    // Update Copyright Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    })
 
-    // Intersection Observer for Scroll Animations
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Navbar Scroll State
+    // Navbar Scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -572,15 +483,14 @@
         navbar.classList.remove('scrolled');
       }
     });
-    if (window.scrollY > 50) navbar.classList.add('scrolled');
 
-    // Mobile Menu Toggle
+    // Mobile Menu
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const iconMenu = document.getElementById('icon-menu');
     const iconClose = document.getElementById('icon-close');
-
     let menuOpen = false;
+
     menuBtn.addEventListener('click', () => {
       menuOpen = !menuOpen;
       if (menuOpen) {
@@ -593,6 +503,42 @@
         iconClose.classList.add('hidden');
       }
     });
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Initial Load
+    const tl = gsap.timeline();
+    tl.to(".reveal-up", {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      stagger: 0.1
+    })
+    .to(".reveal-fade", {
+      opacity: 1,
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.8");
+
+    // Scroll Reveals
+    gsap.utils.toArray('.reveal-up:not(header .reveal-up)').forEach(el => {
+      gsap.fromTo(el,
+        { y: 40, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out"
+        }
+      );
+    });
+
   </script>
 </body>
 </html>
